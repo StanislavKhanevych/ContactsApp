@@ -2,8 +2,11 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   card: {
-    padding: 10,
+    paddingLeft: 10,
+    paddingRight: 70,
     margin: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f1f1',
   },
   infoContainer: {
     flexDirection: 'row',

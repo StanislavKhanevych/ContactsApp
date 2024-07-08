@@ -7,16 +7,16 @@ type TContactsCardProps = {
   contactInfo: Contact;
 };
 
-export default function ContactsCard({contactInfo}: TContactsCardProps) {
-  const {givenName} = contactInfo;
+const ContactsCard = ({contactInfo}: TContactsCardProps) => {
+  const {givenName, familyName} = contactInfo;
   return (
     <View style={styles.card}>
       <View style={styles.infoContainer}>
-        <View style={styles.icon}>
-          <Text style={styles.iconContent}>{givenName[0]}</Text>
-        </View>
-        <Text style={styles.primaryText}>{givenName}</Text>
+        <Text style={styles.primaryText}>{`${givenName} `}</Text>
+        <Text style={styles.primaryText}>{familyName}</Text>
       </View>
     </View>
   );
-}
+};
+
+export default ContactsCard;
