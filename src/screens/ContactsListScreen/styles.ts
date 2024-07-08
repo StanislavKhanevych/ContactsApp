@@ -14,11 +14,11 @@ export default StyleSheet.create({
   searchBar: {
     borderBottomWidth: 0.5,
     borderBottomColor: '#ccc',
-    paddingVertical: 10,
+    paddingVertical: 8,
     paddingHorizontal: 15,
     fontSize: 16,
     marginVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     borderRadius: 10,
     backgroundColor: '#f1f1f1',
   },

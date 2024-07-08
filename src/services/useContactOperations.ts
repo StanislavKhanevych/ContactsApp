@@ -19,6 +19,7 @@ const useContactOperations = () => {
     firstName: string,
     lastName: string,
     phoneNumbers: string[],
+    emailAddresses: string[],
   ) => {
     try {
       if (!firstName.trim() || !lastName.trim() || phoneNumbers.length === 0) {
@@ -30,10 +31,16 @@ const useContactOperations = () => {
         number: ph.trim(),
       }));
 
+      const myEmailAddresses = emailAddresses.map(ph => ({
+        label: 'work',
+        email: ph.trim(),
+      }));
+
       const contactInfo: Contact = {
-        displayName: `${firstName.trim()} ${lastName.trim()}`,
-        givenName: `${firstName.trim()} ${lastName.trim()}`,
+        givenName: firstName.trim(),
+        familyName: lastName.trim(),
         phoneNumbers: myPhoneNumbers,
+        emailAddresses: myEmailAddresses,
       };
 
       await Contacts.addContact(contactInfo);
@@ -53,9 +60,7 @@ const useContactOperations = () => {
 
   const updateContact = async (updatedContact: Contact) => {
     try {
-      console.log('updatedContact', updatedContact);
-      const responce = await Contacts.updateContact(updatedContact);
-      console.log('responceres', responce);
+      await Contacts.updateContact(updatedContact);
       setContact(updatedContact);
     } catch (err) {
       console.log('err', err);

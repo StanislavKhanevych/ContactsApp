@@ -5,7 +5,7 @@ import {
   Pressable,
   ActivityIndicator,
   Image,
-  Button as RNButton,
+  Button,
 } from 'react-native';
 import useContactOperations from '../../services/useContactOperations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -102,13 +102,17 @@ const ContactDetailsScreen = ({
               <Text style={styles.phoneNumber}>{phoneNumber.number}</Text>
             </Pressable>
           ))}
-          <Text style={styles.email}>{contact.emailAddresses?.[0]?.email}</Text>
+          {contact.emailAddresses?.map((email, index) => (
+            <Text key={index} style={styles.email}>
+              {email.email}
+            </Text>
+          ))}
           <Pressable
             style={styles.deleteButton}
             onPress={() => deleteContact(contact.recordID)}>
             <Text style={styles.deleteButtonText}>Delete Contact</Text>
           </Pressable>
-          <RNButton title="Edit" onPress={handleEditContact} />
+          <Button title="Edit" onPress={handleEditContact} />
         </View>
       ) : (
         <ActivityIndicator style={styles.loader} size="large" color="#0000ff" />
