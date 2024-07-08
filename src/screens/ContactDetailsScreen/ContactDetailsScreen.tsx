@@ -83,20 +83,26 @@ const ContactDetailsScreen = ({
           <Text style={styles.name}>
             {contact.givenName} {contact.familyName}
           </Text>
-          {contact.phoneNumbers?.map((phoneNumber, index) => (
-            <Pressable
-              key={index}
-              style={styles.phoneNumberContainer}
-              onPress={() => makeCall(phoneNumber.number)}>
-              <Ionicons name="call" size={18} color="#888" />
-              <Text style={styles.phoneNumber}>{phoneNumber.number}</Text>
-            </Pressable>
-          ))}
-          {contact.emailAddresses?.map((email, index) => (
-            <Text key={index} style={styles.email}>
-              {email.email}
-            </Text>
-          ))}
+          {contact.phoneNumbers?.map(
+            (phoneNumber, index) =>
+              phoneNumber.number !== '' && (
+                <Pressable
+                  key={index}
+                  style={styles.phoneNumberContainer}
+                  onPress={() => makeCall(phoneNumber.number)}>
+                  <Ionicons name="call" size={18} color="#888" />
+                  <Text style={styles.phoneNumber}>{phoneNumber.number}</Text>
+                </Pressable>
+              ),
+          )}
+          {contact.emailAddresses?.map(
+            (email, index) =>
+              email.email !== '' && (
+                <Text key={index} style={styles.email}>
+                  {email.email}
+                </Text>
+              ),
+          )}
           <Pressable
             style={styles.deleteButton}
             onPress={() => deleteContact(contact.recordID)}>
