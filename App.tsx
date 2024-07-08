@@ -8,6 +8,7 @@
 import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+
 import Contacts from 'react-native-contacts';
 import type {PropsWithChildren} from 'react';
 import {
@@ -27,19 +28,9 @@ import CreateContactScreen from './src/screens/CreateContactScreen/CreateContact
 const Stack = createStackNavigator();
 
 function App(): React.JSX.Element {
-  useEffect(() => {
-    Contacts.getAll()
-      .then(contacts => {
-        console.log('contacts', contacts);
-      })
-      .catch(error => {
-        console.log('Error fetching contacts', error);
-      });
-  }, []);
-
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="ContactsList">
         <Stack.Screen name="ContactsList" component={ContactsListScreen} />
         <Stack.Screen name="ContactDetails" component={ContactDetailsScreen} />
         <Stack.Screen name="CreateContact" component={CreateContactScreen} />
