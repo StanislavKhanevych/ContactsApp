@@ -11,6 +11,8 @@ import {
 import useContactOperations from '../../services/useContactOperations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import ContactPhoto from '../../components/ContactPhoto/ContactPhoto';
+
 import styles from './styles';
 
 type TCreateContactProps = {
@@ -172,9 +174,12 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
       </View>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.avatarContainer}>
-          <Image
-            source={{uri: 'https://via.placeholder.com/100'}}
-            style={styles.avatar}
+          <ContactPhoto
+            contact={{
+              givenName: initialContactInfo?.firstName,
+              hasThumbnail: initialContactInfo?.hasThumbnail,
+            }}
+            photoURI={initialContactInfo?.thumbnailPath}
           />
           <Pressable>
             <Text style={styles.editText}>Edit</Text>

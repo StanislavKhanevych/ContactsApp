@@ -9,10 +9,12 @@ import {
 } from 'react-native';
 import useContactOperations from '../../services/useContactOperations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ContactPhoto from '../../components/ContactPhoto/ContactPhoto';
 import {
   ContactDetailsScreenRouteProp,
   ContactDetailsScreenNavigationProp,
 } from '../../types/types';
+
 import styles from './styles';
 
 type TContactDetailsScreenProps = {
@@ -53,6 +55,8 @@ const ContactDetailsScreen = ({
         firstName: contact.givenName,
         lastName: contact.familyName,
         recordID: contact.recordID,
+        hasThumbnail: contact.hasThumbnail,
+        thumbnailPath: photoURI,
         phoneNumbers: contact.phoneNumbers.map(
           phoneNumber => phoneNumber.number,
         ),
@@ -71,25 +75,11 @@ const ContactDetailsScreen = ({
     );
   }
 
-  const renderContactPhoto = () => {
-    if (contact?.hasThumbnail && photoURI) {
-      return <Image source={{uri: photoURI}} style={styles.image} />;
-    }
-
-    return (
-      <View style={styles.defaultImage}>
-        <Text style={styles.initial}>
-          {contact.givenName.charAt(0).toUpperCase()}
-        </Text>
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container}>
       {!loading ? (
         <View style={styles.detailsContainer}>
-          {renderContactPhoto()}
+          <ContactPhoto contact={contact} photoURI={photoURI} />
           <Text style={styles.name}>
             {contact.givenName} {contact.familyName}
           </Text>

@@ -11,26 +11,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 20,
-  },
-  initial: {
-    fontSize: 40,
-    color: 'white',
-    fontFamily: 'Helvetica',
-  },
-  defaultImage: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 20,
-    backgroundColor: '#999999',
-  },
   name: {
     fontSize: 24,
     fontWeight: 'bold',
