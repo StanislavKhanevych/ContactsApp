@@ -1,0 +1,222 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactsListScreen should match the snapshot 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": "#fff",
+      "flex": 1,
+    }
+  }
+>
+  <Text
+    allowFontScaling={false}
+    onPress={[Function]}
+    selectable={false}
+    style={
+      [
+        {
+          "color": "#007AFF",
+          "fontSize": 62,
+        },
+        {
+          "bottom": 20,
+          "position": "absolute",
+          "right": 20,
+          "zIndex": 1,
+        },
+        {
+          "fontFamily": "Ionicons",
+          "fontStyle": "normal",
+          "fontWeight": "normal",
+        },
+        {},
+      ]
+    }
+    testID="add-contact"
+  >
+    
+  </Text>
+  <TextInput
+    onChangeText={[Function]}
+    placeholder="Search"
+    style={
+      {
+        "backgroundColor": "#f1f1f1",
+        "borderBottomColor": "#ccc",
+        "borderBottomWidth": 0.5,
+        "borderRadius": 10,
+        "fontSize": 16,
+        "marginHorizontal": 10,
+        "marginVertical": 10,
+        "paddingHorizontal": 15,
+        "paddingVertical": 8,
+      }
+    }
+    testID="search-bar"
+    value=""
+  />
+  <RCTScrollView
+    data={
+      [
+        {
+          "data": [
+            {
+              "emailAddresses": [
+                {
+                  "email": "carl-jung@example.com",
+                  "label": "work",
+                },
+              ],
+              "familyName": "Jung",
+              "givenName": "Carl",
+              "hasThumbnail": true,
+              "phoneNumbers": [
+                {
+                  "label": "mobile",
+                  "number": "(555) 555-5555",
+                },
+              ],
+              "recordID": "6b2237ee0df85980",
+              "thumbnailPath": "content://com.android.contacts/display_photo/3",
+            },
+          ],
+          "title": "C",
+        },
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    renderItem={[Function]}
+    scrollEventThrottle={0.0001}
+    stickyHeaderIndices={
+      [
+        0,
+      ]
+    }
+    testID="flat-list"
+  >
+    <View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "white",
+              "borderBottomColor": "#f1f1f1",
+              "borderBottomWidth": 1,
+              "paddingHorizontal": 15,
+              "paddingVertical": 5,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "fontSize": 18,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            C
+          </Text>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+        >
+          <View
+            style={
+              {
+                "borderBottomColor": "#f1f1f1",
+                "borderBottomWidth": 1,
+                "margin": 5,
+                "paddingLeft": 10,
+                "paddingRight": 70,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "paddingVertical": 5,
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "fontSize": 18,
+                  }
+                }
+              >
+                Carl 
+              </Text>
+              <Text
+                style={
+                  {
+                    "fontSize": 18,
+                  }
+                }
+              >
+                Jung
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      />
+    </View>
+  </RCTScrollView>
+</View>
+`;

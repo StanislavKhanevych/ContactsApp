@@ -47,6 +47,7 @@ const ContactsListScreen = ({navigation}: TContactsListScreenProps) => {
   return (
     <View style={styles.container}>
       <Ionicons
+        testID="add-contact"
         name="add-circle"
         size={62}
         color="#007AFF"
@@ -54,12 +55,14 @@ const ContactsListScreen = ({navigation}: TContactsListScreenProps) => {
         onPress={() => navigation.navigate('CreateContact')}
       />
       <TextInput
+        testID="search-bar"
         style={styles.searchBar}
         placeholder="Search"
         value={search}
         onChangeText={setSearch}
       />
       <SectionList
+        testID="flat-list"
         sections={groupedContacts}
         keyExtractor={(item: Contact) => item.recordID}
         renderItem={renderItem}
