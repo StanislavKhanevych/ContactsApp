@@ -5,27 +5,31 @@ import {NavigationContainer} from '@react-navigation/native';
 
 jest.mock('../../../services/useContacts', () => ({
   __esModule: true,
-  default: jest.fn().mockReturnValue([
-    {
-      recordID: '6b2237ee0df85980',
-      emailAddresses: [
-        {
-          label: 'work',
-          email: 'carl-jung@example.com',
-        },
-      ],
-      familyName: 'Jung',
-      givenName: 'Carl',
-      phoneNumbers: [
-        {
-          label: 'mobile',
-          number: '(555) 555-5555',
-        },
-      ],
-      hasThumbnail: true,
-      thumbnailPath: 'content://com.android.contacts/display_photo/3',
-    },
-  ]),
+  default: jest.fn().mockReturnValue({
+    contacts: [
+      {
+        recordID: '6b2237ee0df85980',
+        emailAddresses: [
+          {
+            label: 'work',
+            email: 'carl-jung@example.com',
+          },
+        ],
+        familyName: 'Jung',
+        givenName: 'Carl',
+        phoneNumbers: [
+          {
+            label: 'mobile',
+            number: '(555) 555-5555',
+          },
+        ],
+        hasThumbnail: true,
+        thumbnailPath: 'content://com.android.contacts/display_photo/3',
+      },
+    ],
+    permissionGranted: true,
+    setContacts: jest.fn(),
+  }),
 }));
 
 describe('ContactsListScreen', () => {

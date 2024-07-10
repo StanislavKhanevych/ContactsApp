@@ -20,7 +20,7 @@ import {
 
 const ContactsListScreen = ({navigation}: TContactsListScreenProps) => {
   const [search, setSearch] = useState('');
-  const {contacts, permissionGranted, setContacts} = useContacts();
+  const {contacts, permissionGranted} = useContacts();
   const filteredContacts = useFilteredContacts(contacts, search);
   const groupedContacts = useGroupedContacts(filteredContacts);
 
