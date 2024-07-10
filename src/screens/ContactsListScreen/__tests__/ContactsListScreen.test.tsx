@@ -56,7 +56,7 @@ describe('ContactsListScreen', () => {
   it('checks if search works correctly', async () => {
     const {getByTestId, queryByText} = render(
       <NavigationContainer>
-        <ContactsListScreen navigation={mockNavigation as any} />
+        <ContactsListScreen navigation={mockNavigation} />
       </NavigationContainer>,
     );
 
@@ -73,7 +73,7 @@ describe('ContactsListScreen', () => {
   it('navigates to CreateContact screen on add-contact press', () => {
     const {getByTestId} = render(
       <NavigationContainer>
-        <ContactsListScreen navigation={mockNavigation as any} />
+        <ContactsListScreen navigation={mockNavigation} />
       </NavigationContainer>,
     );
     const addButton = getByTestId('add-contact');
@@ -85,7 +85,7 @@ describe('ContactsListScreen', () => {
   it('navigates to ContactDetails screen on contact item press', () => {
     const {getByText} = render(
       <NavigationContainer>
-        <ContactsListScreen navigation={mockNavigation as any} />
+        <ContactsListScreen navigation={mockNavigation} />
       </NavigationContainer>,
     );
     const contactItem = getByText('Jung');
@@ -99,7 +99,7 @@ describe('ContactsListScreen', () => {
   it('should match the snapshot', () => {
     const component = render(
       <NavigationContainer>
-        <ContactsListScreen navigation={mockNavigation as any} />
+        <ContactsListScreen navigation={mockNavigation} />
       </NavigationContainer>,
     ).toJSON();
 
