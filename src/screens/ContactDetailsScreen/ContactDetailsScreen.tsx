@@ -3,6 +3,7 @@ import {View, Text, Pressable, ActivityIndicator, Button} from 'react-native';
 import useContactOperations from '../../services/useContactOperations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ContactPhoto from '../../components/ContactPhoto/ContactPhoto';
+import useContacts from '../../services/useContacts';
 import {
   ContactDetailsScreenRouteProp,
   ContactDetailsScreenNavigationProp,
@@ -20,8 +21,9 @@ const ContactDetailsScreen = ({
   navigation,
 }: TContactDetailsScreenProps) => {
   const {contactInfo} = route.params;
+  const {permissionGranted, setContacts} = useContacts();
   const {contact, getContact, deleteContact, getContactPhoto, makeCall, error} =
-    useContactOperations();
+    useContactOperations(permissionGranted, setContacts);
   const [photoURI, setPhotoURI] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -39,7 +41,7 @@ const ContactDetailsScreen = ({
     };
 
     fetchContact();
-  }, [contactInfo.id, contactInfo.givenName]);
+  }, [contactInfo.id, contactInfo.givenName, permissionGranted]);
 
   const handleEditContact = () => {
     navigation.navigate('CreateContact', {
@@ -62,9 +64,9 @@ const ContactDetailsScreen = ({
         <View style={styles.detailsContainer}>
           <ContactPhoto contact={contact} photoURI={photoURI} />
           <Text style={styles.name}>
-            {contact.givenName} {contact.familyName}
+            {contact?.givenName} {contact?.familyName}
           </Text>
-          {contact.phoneNumbers?.map(
+          {contact?.phoneNumbers?.map(
             (phoneNumber, index) =>
               phoneNumber.number !== '' && (
                 <Pressable
@@ -76,7 +78,7 @@ const ContactDetailsScreen = ({
                 </Pressable>
               ),
           )}
-          {contact.emailAddresses?.map(
+          {contact?.emailAddresses?.map(
             (email, index) =>
               email.email !== '' && (
                 <Text key={index} style={styles.email}>
@@ -86,7 +88,7 @@ const ContactDetailsScreen = ({
           )}
           <Pressable
             style={styles.deleteButton}
-            onPress={() => deleteContact(contact.recordID)}>
+            onPress={() => deleteContact(contact?.recordID)}>
             <Text style={styles.deleteButtonText}>Delete Contact</Text>
           </Pressable>
           <Button title="Edit" onPress={handleEditContact} />

@@ -33,4 +33,11 @@ export default StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+
+  permissionMessage: {
+    fontSize: 12,
+    textAlign: 'center',
+    marginBottom: 5,
+    color: '#007AFF',
+  },
 });

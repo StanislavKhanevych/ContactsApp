@@ -12,7 +12,7 @@ type TContactPhotoProps = {
 };
 
 const ContactPhoto = ({contact, photoURI}: TContactPhotoProps) => {
-  if (contact.hasThumbnail && photoURI) {
+  if (contact?.hasThumbnail && photoURI) {
     return <Image source={{uri: photoURI}} style={styles.image} />;
   }
 
@@ -20,7 +20,7 @@ const ContactPhoto = ({contact, photoURI}: TContactPhotoProps) => {
     return (
       <View style={styles.defaultImage}>
         <Text style={styles.initial}>
-          {contact.givenName.charAt(0).toUpperCase()}
+          {contact?.givenName.charAt(0).toUpperCase()}
         </Text>
       </View>
     );

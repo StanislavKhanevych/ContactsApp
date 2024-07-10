@@ -8,12 +8,15 @@ type TContactsCardProps = {
 };
 
 const ContactsCard = ({contactInfo}: TContactsCardProps) => {
-  const {givenName, familyName} = contactInfo;
+  const {givenName, familyName, phoneNumbers} = contactInfo;
   return (
     <View style={styles.card}>
       <View style={styles.infoContainer}>
         <Text style={styles.primaryText}>{`${givenName} `}</Text>
         <Text style={styles.primaryText}>{familyName}</Text>
+        {!givenName && !familyName ? (
+          <Text style={styles.primaryText}>{phoneNumbers[0].number}</Text>
+        ) : null}
       </View>
     </View>
   );

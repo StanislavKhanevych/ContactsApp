@@ -9,9 +9,9 @@ export const useFilteredContacts = (contacts: Contact[], search: string) => {
     const searchLower = search.toLowerCase();
     return contacts.filter(
       contact =>
-        contact.givenName.toLowerCase().includes(searchLower) ||
-        contact.familyName.toLowerCase().includes(searchLower) ||
-        contact.phoneNumbers.some(phone => phone.number.includes(search)),
+        contact?.givenName.toLowerCase().includes(searchLower) ||
+        contact?.familyName.toLowerCase().includes(searchLower) ||
+        contact?.phoneNumbers.some(phone => phone.number.includes(search)),
     );
   }, [contacts, search]);
 };
@@ -20,7 +20,7 @@ export const useGroupedContacts = (contacts: Contact[]) => {
   return useMemo(() => {
     const grouped = contacts.reduce(
       (acc: {[key: string]: Contact[]}, contact) => {
-        const firstLetter = contact.givenName.charAt(0).toUpperCase();
+        const firstLetter = contact?.givenName.charAt(0).toUpperCase();
         if (!acc[firstLetter]) {
           acc[firstLetter] = [];
         }

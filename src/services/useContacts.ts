@@ -2,18 +2,20 @@ import {useState, useEffect} from 'react';
 import {Platform, PermissionsAndroid} from 'react-native';
 import Contacts from 'react-native-contacts';
 import {useIsFocused} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useContacts = () => {
   const isFocused = useIsFocused();
   const [contacts, setContacts] = useState([]);
+  const [permissionGranted, setPermissionGranted] = useState(false);
 
   useEffect(() => {
     if (isFocused) {
-      getAllContacts();
+      requestContactsPermission();
     }
   }, [isFocused]);
 
-  const getAllContacts = async () => {
+  const requestContactsPermission = async () => {
     if (Platform.OS === 'android') {
       try {
         const permission = await PermissionsAndroid.request(
@@ -26,26 +28,44 @@ const useContacts = () => {
         );
 
         if (permission === PermissionsAndroid.RESULTS.GRANTED) {
+          setPermissionGranted(true);
           const contacts = await Contacts.getAll();
           setContacts(contacts);
         } else {
-          console.log('Contacts permission denied');
+          setPermissionGranted(false);
+          loadLocalContacts();
         }
       } catch (error) {
         console.log('Permission error:', error);
+        setPermissionGranted(false);
+        loadLocalContacts();
       }
     } else {
       // iOS only
       try {
         const contacts = await Contacts.getAll();
+        setPermissionGranted(true);
         setContacts(contacts);
       } catch (error) {
         console.log(error);
+        setPermissionGranted(false);
+        loadLocalContacts();
       }
     }
   };
 
-  return contacts;
+  const loadLocalContacts = async () => {
+    try {
+      const storedContacts = await AsyncStorage.getItem('localContacts');
+      if (storedContacts) {
+        setContacts(JSON.parse(storedContacts));
+      }
+    } catch (error) {
+      console.log('Failed to load local contacts', error);
+    }
+  };
+
+  return {contacts, permissionGranted, setContacts};
 };
 
 export default useContacts;

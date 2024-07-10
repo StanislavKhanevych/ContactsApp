@@ -20,7 +20,7 @@ import {
 
 const ContactsListScreen = ({navigation}: TContactsListScreenProps) => {
   const [search, setSearch] = useState('');
-  const contacts = useContacts();
+  const {contacts, permissionGranted, setContacts} = useContacts();
   const filteredContacts = useFilteredContacts(contacts, search);
   const groupedContacts = useGroupedContacts(filteredContacts);
 
@@ -64,11 +64,16 @@ const ContactsListScreen = ({navigation}: TContactsListScreenProps) => {
       <SectionList
         testID="flat-list"
         sections={groupedContacts}
-        keyExtractor={(item: Contact) => item.recordID}
-        renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
+        renderItem={renderItem}
+        keyExtractor={(item: Contact) => item.recordID}
         stickySectionHeadersEnabled
       />
+      {!permissionGranted && (
+        <Text style={styles.permissionMessage}>
+          Contacts permission denied. Managing local contacts only.
+        </Text>
+      )}
     </View>
   );
 };

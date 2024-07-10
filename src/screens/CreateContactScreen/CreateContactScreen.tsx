@@ -11,6 +11,7 @@ import useContactOperations from '../../services/useContactOperations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Contact} from 'react-native-contacts';
 import ContactPhoto from '../../components/ContactPhoto/ContactPhoto';
+import useContacts from '../../services/useContacts';
 
 import styles from './styles';
 
@@ -20,7 +21,11 @@ type TCreateContactProps = {
 };
 
 const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
-  const {addContact, updateContact} = useContactOperations();
+  const {permissionGranted, setContacts} = useContacts();
+  const {addContact, updateContact} = useContactOperations(
+    permissionGranted,
+    setContacts,
+  );
   const {editMode, contactInfo: initialContactInfo} = route.params || {};
 
   const [firstName, setFirstName] = useState<Contact['givenName']>(
@@ -152,6 +157,7 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
     type: 'number' | 'email';
     callBack: () => void;
   }) => {
+    const isAddButtonActive = data.every(item => item[type].length !== 0);
     return (
       <View>
         {data.map((item, index) => (
@@ -159,9 +165,18 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
             {renderInputField({item, index, type})}
           </View>
         ))}
-        <Pressable style={styles.addButton} onPress={callBack}>
+        <Pressable
+          style={styles.addButton}
+          onPress={callBack}
+          disabled={!isAddButtonActive}>
           <Ionicons name="add-circle-outline" size={24} color="green" />
-          <Text style={styles.addButtonText}>add {type}</Text>
+          <Text
+            style={[
+              styles.addButtonText,
+              !isAddButtonActive && styles.disabled,
+            ]}>
+            add {type}
+          </Text>
         </Pressable>
       </View>
     );
