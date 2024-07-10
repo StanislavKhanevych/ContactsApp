@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   Alert,
   ScrollView,
   Pressable,
-  Image,
 } from 'react-native';
 import useContactOperations from '../../services/useContactOperations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -42,6 +41,11 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
   >(
     editMode ? initialContactInfo.emailAddresses : [{email: '', label: 'work'}],
   );
+
+  const isDoneButtonDisabled =
+    !firstName &&
+    !lastName &&
+    phoneNumbers.every(phone => phone.number.length === 0);
 
   const handlePhoneNumberChange = useCallback(
     (text: string, index: number) => {
@@ -169,9 +173,12 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
         <Pressable onPress={() => navigation.goBack()}>
           <Text style={styles.cancelText}>Cancel</Text>
         </Pressable>
-        <Text style={styles.doneText} onPress={handleSaveContact}>
-          Done
-        </Text>
+        <Pressable onPress={handleSaveContact} disabled={isDoneButtonDisabled}>
+          <Text
+            style={[styles.doneText, isDoneButtonDisabled && styles.disabled]}>
+            Done
+          </Text>
+        </Pressable>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.avatarContainer}>

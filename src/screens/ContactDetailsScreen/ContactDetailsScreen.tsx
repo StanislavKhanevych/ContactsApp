@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  ActivityIndicator,
-  Image,
-  Button,
-} from 'react-native';
+import {View, Text, Pressable, ActivityIndicator, Button} from 'react-native';
 import useContactOperations from '../../services/useContactOperations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ContactPhoto from '../../components/ContactPhoto/ContactPhoto';

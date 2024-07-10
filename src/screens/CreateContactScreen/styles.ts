@@ -22,6 +22,9 @@ export default StyleSheet.create({
     color: '#007AFF',
     fontSize: 17,
   },
+  disabled: {
+    color: '#ccc',
+  },
   avatarContainer: {
     alignItems: 'center',
     marginBottom: 20,
