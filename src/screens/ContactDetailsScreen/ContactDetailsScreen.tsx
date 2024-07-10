@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Pressable, ActivityIndicator, Button} from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  ActivityIndicator,
+  Button,
+  Alert,
+} from 'react-native';
 import useContactOperations from '../../services/useContactOperations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ContactPhoto from '../../components/ContactPhoto/ContactPhoto';
@@ -50,6 +57,27 @@ const ContactDetailsScreen = ({
     });
   };
 
+  const handleDeleteContact = () => {
+    Alert.alert(
+      'Delete Contact',
+      'Are you sure you want to delete this contact?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            deleteContact(contact);
+            navigation.goBack();
+          },
+        },
+      ],
+    );
+  };
+
   if (error) {
     return (
       <View style={styles.container}>
@@ -86,9 +114,7 @@ const ContactDetailsScreen = ({
                 </Text>
               ),
           )}
-          <Pressable
-            style={styles.deleteButton}
-            onPress={() => deleteContact(contact?.recordID)}>
+          <Pressable style={styles.deleteButton} onPress={handleDeleteContact}>
             <Text style={styles.deleteButtonText}>Delete Contact</Text>
           </Pressable>
           <Button title="Edit" onPress={handleEditContact} />

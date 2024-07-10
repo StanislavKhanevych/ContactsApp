@@ -61,10 +61,10 @@ const useContactOperations = (permissionGranted, setContacts) => {
     }
   };
 
-  const deleteContact = async (id: string) => {
+  const deleteContact = async (contact: Contact) => {
     if (permissionGranted) {
       try {
-        await Contacts.deleteContact(id);
+        await Contacts.deleteContact(contact);
         setContact(null);
       } catch (err) {
         setError('Failed to delete contact');
