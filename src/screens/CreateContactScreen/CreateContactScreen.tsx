@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import useContactOperations from '../../services/useContactOperations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import {Contact} from 'react-native-contacts';
 import ContactPhoto from '../../components/ContactPhoto/ContactPhoto';
 
 import styles from './styles';
@@ -24,32 +24,29 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
   const {addContact, updateContact} = useContactOperations();
   const {editMode, contactInfo: initialContactInfo} = route.params || {};
 
-  const initialPhoneNumbers = useMemo(
-    () => (editMode ? initialContactInfo.phoneNumbers : ['']),
-    [editMode, initialContactInfo],
+  const [firstName, setFirstName] = useState<Contact['givenName']>(
+    editMode ? initialContactInfo.givenName : '',
+  );
+  const [lastName, setLastName] = useState<Contact['familyName']>(
+    editMode ? initialContactInfo.familyName : '',
   );
 
-  const initialEmailAddresses = useMemo(
-    () => (editMode ? initialContactInfo.emailAddresses : ['']),
-    [editMode, initialContactInfo],
+  const [phoneNumbers, setPhoneNumbers] = useState<Contact['phoneNumbers']>(
+    editMode
+      ? initialContactInfo.phoneNumbers
+      : [{number: '', label: 'mobile'}],
   );
 
-  const [firstName, setFirstName] = useState(
-    editMode ? initialContactInfo.firstName : '',
-  );
-  const [lastName, setLastName] = useState(
-    editMode ? initialContactInfo.lastName : '',
-  );
-  const [phoneNumbers, setPhoneNumbers] =
-    useState<string[]>(initialPhoneNumbers);
-  const [emailAddresses, setEmailAddresses] = useState<string[]>(
-    initialEmailAddresses,
+  const [emailAddresses, setEmailAddresses] = useState<
+    Contact['emailAddresses']
+  >(
+    editMode ? initialContactInfo.emailAddresses : [{email: '', label: 'work'}],
   );
 
   const handlePhoneNumberChange = useCallback(
     (text: string, index: number) => {
       const newPhoneNumbers = [...phoneNumbers];
-      newPhoneNumbers[index] = text;
+      newPhoneNumbers[index].number = text;
       setPhoneNumbers(newPhoneNumbers);
     },
     [phoneNumbers],
@@ -58,39 +55,43 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
   const handleEmailChange = useCallback(
     (text: string, index: number) => {
       const newEmailAddresses = [...emailAddresses];
-      newEmailAddresses[index] = text;
+      newEmailAddresses[index].email = text;
       setEmailAddresses(newEmailAddresses);
     },
     [emailAddresses],
   );
 
+  const handleFirstName = useCallback(
+    (text: string) => {
+      setFirstName(text);
+    },
+    [firstName],
+  );
+
+  const handleLastName = useCallback(
+    (text: string) => {
+      setLastName(text);
+    },
+    [lastName],
+  );
+
   const addPhoneNumberField = useCallback(() => {
-    setPhoneNumbers([...phoneNumbers, '']);
+    setPhoneNumbers([...phoneNumbers, {number: '', label: 'mobile'}]);
   }, [phoneNumbers]);
 
   const addEmailField = useCallback(() => {
-    setEmailAddresses([...emailAddresses, '']);
+    setEmailAddresses([...emailAddresses, {email: '', label: 'work'}]);
   }, [emailAddresses]);
 
   const handleSaveContact = useCallback(async () => {
     try {
       if (editMode) {
         const updatedContact = {
-          recordID: initialContactInfo.recordID,
+          ...initialContactInfo,
           givenName: firstName,
           familyName: lastName,
-          phoneNumbers: phoneNumbers
-            .filter(p => p)
-            .map(phoneNumber => ({
-              label: 'mobile',
-              number: phoneNumber,
-            })),
-          emailAddresses: emailAddresses
-            .filter(e => e)
-            .map(email => ({
-              label: 'work',
-              email: email,
-            })),
+          phoneNumbers: phoneNumbers,
+          emailAddresses: emailAddresses,
         };
         await updateContact(updatedContact);
       } else {
@@ -119,12 +120,12 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
   }: {
     item: string;
     index: number;
-    type: 'phone' | 'email';
+    type: 'number' | 'email';
   }) => {
-    const placeholder = type === 'phone' ? 'Phone Number' : 'Email Address';
-    const keyboardType = type === 'phone' ? 'phone-pad' : 'default';
+    const placeholder = type === 'number' ? 'Phone Number' : 'Email Address';
+    const keyboardType = type === 'number' ? 'phone-pad' : 'default';
     const handleChange =
-      type === 'phone' ? handlePhoneNumberChange : handleEmailChange;
+      type === 'number' ? handlePhoneNumberChange : handleEmailChange;
 
     return (
       <TextInput
@@ -132,7 +133,7 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
         style={styles.input}
         placeholder={placeholder}
         keyboardType={keyboardType}
-        value={item}
+        value={item[type]}
         onChangeText={text => handleChange(text, index)}
       />
     );
@@ -144,7 +145,7 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
     callBack,
   }: {
     data: string[];
-    type: 'phone' | 'email';
+    type: 'number' | 'email';
     callBack: () => void;
   }) => {
     return (
@@ -190,17 +191,17 @@ const CreateContactScreen = ({navigation, route}: TCreateContactProps) => {
             style={styles.input}
             placeholder="First Name"
             value={firstName}
-            onChangeText={text => setFirstName(text)}
+            onChangeText={handleFirstName}
           />
           <TextInput
             style={styles.input}
             placeholder="Last Name"
             value={lastName}
-            onChangeText={text => setLastName(text)}
+            onChangeText={handleLastName}
           />
           {renderDetailsList({
             data: phoneNumbers,
-            type: 'phone',
+            type: 'number',
             callBack: addPhoneNumberField,
           })}
           {renderDetailsList({

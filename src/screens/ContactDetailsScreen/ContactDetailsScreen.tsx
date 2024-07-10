@@ -51,19 +51,7 @@ const ContactDetailsScreen = ({
   const handleEditContact = () => {
     navigation.navigate('CreateContact', {
       editMode: true,
-      contactInfo: {
-        firstName: contact.givenName,
-        lastName: contact.familyName,
-        recordID: contact.recordID,
-        hasThumbnail: contact.hasThumbnail,
-        thumbnailPath: photoURI,
-        phoneNumbers: contact.phoneNumbers.map(
-          phoneNumber => phoneNumber.number,
-        ),
-        emailAddresses: contact.emailAddresses.map(
-          emailAddress => emailAddress.email,
-        ),
-      },
+      contactInfo: {...contact, thumbnailPath: photoURI},
     });
   };
 

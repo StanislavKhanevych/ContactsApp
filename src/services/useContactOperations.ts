@@ -16,31 +16,21 @@ const useContactOperations = () => {
   };
 
   const addContact = async (
-    firstName: string,
-    lastName: string,
-    phoneNumbers: string[],
-    emailAddresses: string[],
+    firstName: Contact['givenName'],
+    lastName: Contact['familyName'],
+    phoneNumbers: Contact['phoneNumbers'],
+    emailAddresses: Contact['emailAddresses'],
   ) => {
     try {
       if (!firstName.trim() || !lastName.trim() || phoneNumbers.length === 0) {
         throw new Error('Please fill all fields');
       }
 
-      const myPhoneNumbers = phoneNumbers.map(ph => ({
-        label: 'mobile',
-        number: ph.trim(),
-      }));
-
-      const myEmailAddresses = emailAddresses.map(ph => ({
-        label: 'work',
-        email: ph.trim(),
-      }));
-
       const contactInfo: Contact = {
         givenName: firstName.trim(),
         familyName: lastName.trim(),
-        phoneNumbers: myPhoneNumbers,
-        emailAddresses: myEmailAddresses,
+        phoneNumbers: phoneNumbers,
+        emailAddresses: emailAddresses,
       };
 
       await Contacts.addContact(contactInfo);
